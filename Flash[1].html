@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Flashcard Quiz App</title>
+
+<style>
+body{
+    font-family: Arial;
+    background:#f4f4f4;
+    text-align:center;
+}
+
+.container{
+    width:400px;
+    margin:auto;
+    background:white;
+    padding:20px;
+    margin-top:60px;
+    border-radius:10px;
+    box-shadow:0px 0px 10px gray;
+}
+
+.card{
+    font-size:20px;
+    margin:20px 0;
+    min-height:60px;
+}
+
+button{
+    padding:10px 15px;
+    margin:5px;
+    border:none;
+    background:#007BFF;
+    color:white;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#0056b3;
+}
+
+input{
+    padding:8px;
+    margin:5px;
+    width:80%;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Flashcard Quiz</h2>
+
+<div class="card" id="card"></div>
+
+<button onclick="showAnswer()">Show Answer</button>
+<br>
+
+<button onclick="prevCard()">Previous</button>
+<button onclick="nextCard()">Next</button>
+
+<hr>
+
+<h3>Add Flashcard</h3>
+
+<input id="question" placeholder="Enter Question"><br>
+<input id="answer" placeholder="Enter Answer"><br>
+
+<button onclick="addCard()">Add</button>
+<button onclick="editCard()">Edit</button>
+<button onclick="deleteCard()">Delete</button>
+
+</div>
+
+<script>
+
+let flashcards = [
+{question:"What is HTML?", answer:"Hyper Text Markup Language"},
+{question:"What is CSS?", answer:"Used for styling web pages"},
+{question:"What is JS?", answer:"JavaScript programming language"}
+];
+
+let current = 0;
+let showingAnswer = false;
+
+function displayCard(){
+    showingAnswer=false;
+    document.getElementById("card").innerText =
+    flashcards[current].question;
+}
+
+function showAnswer(){
+    if(!showingAnswer){
+        document.getElementById("card").innerText =
+        flashcards[current].answer;
+        showingAnswer=true;
+    }
+}
+
+function nextCard(){
+    if(current < flashcards.length-1){
+        current++;
+        displayCard();
+    }
+}
+
+function prevCard(){
+    if(current > 0){
+        current--;
+        displayCard();
+    }
+}
+
+function addCard(){
+    let q=document.getElementById("question").value;
+    let a=document.getElementById("answer").value;
+
+    if(q && a){
+        flashcards.push({question:q,answer:a});
+        document.getElementById("question").value="";
+        document.getElementById("answer").value="";
+        alert("Flashcard Added");
+    }
+}
+
+function editCard(){
+    let q=document.getElementById("question").value;
+    let a=document.getElementById("answer").value;
+
+    if(q && a){
+        flashcards[current]={question:q,answer:a};
+        displayCard();
+        alert("Flashcard Updated");
+    }
+}
+
+function deleteCard(){
+    flashcards.splice(current,1);
+
+    if(current>0) current--;
+
+    displayCard();
+}
+
+displayCard();
+
+</script>
+
+</body>
+</html>c
